@@ -1,60 +1,189 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Phone Memory Trainer</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
+
 
 <div class="game">
 
+
     <h1>📱 Phone Memory Trainer</h1>
 
-    <div class="target">
-        Remember:
-        <strong id="targetNumber">
-            04 512 847 936
-        </strong>
-    </div>
 
 
-    <div class="display" id="display">
-        _
-    </div>
+    <!-- SETUP SCREEN -->
+
+    <div id="setup">
+
+        <h3>
+            Enter a mobile number to practise
+        </h3>
 
 
-    <div class="keypad">
+        <input
+            id="phoneInput"
+            type="tel"
+            placeholder="04XX XXX XXX"
+            maxlength="12"
+        >
 
-        <button onclick="pressKey('1')">1</button>
-        <button onclick="pressKey('2')">2</button>
-        <button onclick="pressKey('3')">3</button>
 
-        <button onclick="pressKey('4')">4</button>
-        <button onclick="pressKey('5')">5</button>
-        <button onclick="pressKey('6')">6</button>
+        <br><br>
 
-        <button onclick="pressKey('7')">7</button>
-        <button onclick="pressKey('8')">8</button>
-        <button onclick="pressKey('9')">9</button>
 
-        <button onclick="clearNumber()">⌫</button>
-        <button onclick="pressKey('0')">0</button>
-        <button onclick="submit()">✓</button>
+        <button onclick="startGame()">
+            Start Training
+        </button>
+
 
     </div>
 
 
-    <div class="score">
-        Score:
-        <span id="score">0</span>
+
+
+
+    <!-- GAME SCREEN -->
+
+    <div id="gameArea" style="display:none;">
+
+
+
+        <div class="target">
+
+            Remember:
+
+            <br>
+
+            <strong id="targetNumber">
+            </strong>
+
+        </div>
+
+
+
+
+
+        <div class="display" id="display">
+
+            _
+
+        </div>
+
+
+
+
+
+        <!-- PHONE KEYPAD -->
+
+        <div class="keypad">
+
+
+            <button onclick="pressKey('1')">
+                1
+            </button>
+
+
+            <button onclick="pressKey('2')">
+                2
+            </button>
+
+
+            <button onclick="pressKey('3')">
+                3
+            </button>
+
+
+
+            <button onclick="pressKey('4')">
+                4
+            </button>
+
+
+            <button onclick="pressKey('5')">
+                5
+            </button>
+
+
+            <button onclick="pressKey('6')">
+                6
+            </button>
+
+
+
+
+            <button onclick="pressKey('7')">
+                7
+            </button>
+
+
+            <button onclick="pressKey('8')">
+                8
+            </button>
+
+
+            <button onclick="pressKey('9')">
+                9
+            </button>
+
+
+
+
+            <button onclick="clearNumber()">
+                ⌫
+            </button>
+
+
+            <button onclick="pressKey('0')">
+                0
+            </button>
+
+
+            <button onclick="submit()">
+                ✓
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <div class="score">
+
+            Score:
+
+            <span id="score">
+                0
+            </span>
+
+
+        </div>
+
+
+
     </div>
 
 
 </div>
 
 
+
+
+
 <script src="app.js"></script>
 
+
 </body>
+
+
 </html>
