@@ -1,0 +1,85 @@
+body {
+
+    background:#f2f2f2;
+    font-family: Arial, sans-serif;
+
+}
+
+
+.game {
+
+    width:350px;
+    margin:40px auto;
+    text-align:center;
+
+}
+
+
+.target {
+
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+
+}
+
+
+.display {
+
+    background:black;
+    color:white;
+
+    font-size:32px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.keypad {
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+
+button {
+
+    height:70px;
+
+    border-radius:50%;
+
+    border:none;
+
+    font-size:28px;
+
+    background:#ddd;
+
+    cursor:pointer;
+
+}
+
+
+button:active {
+
+    background:#74b9ff;
+
+}
+
+
+.score {
+
+    margin-top:20px;
+
+    font-size:20px;
+
+}
