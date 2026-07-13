@@ -188,29 +188,28 @@ function getChallenge(){
 
 function calculateLevel(){
 
-
-    if(Game.score >= 1000){
+    if(Game.score >= 2000){
 
         return 5;
 
     }
 
 
-    if(Game.score >= 500){
+    if(Game.score >= 1200){
 
         return 4;
 
     }
 
 
-    if(Game.score >= 200){
+    if(Game.score >= 700){
 
         return 3;
 
     }
 
 
-    if(Game.score >= 100){
+    if(Game.score >= 300){
 
         return 2;
 
