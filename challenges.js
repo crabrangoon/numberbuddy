@@ -29,6 +29,9 @@ function createFullRecall(number){
 }
 
 
+
+
+
 // =====================================
 // Level 1
 // Missing Digit
@@ -55,11 +58,13 @@ function createMissingDigit(number){
         question:
             "❓ Which digit is missing?",
 
+
         display:
             maskDigit(
                 number,
                 position
             ),
+
 
         answer:
             body[position]
@@ -70,9 +75,16 @@ function createMissingDigit(number){
 
 
 
+
+
 // =====================================
 // Level 1
 // Position Recall
+//
+// Example:
+// What is digit 7?
+//
+// 04 1234 5█78
 // =====================================
 
 function createPositionChallenge(number){
@@ -87,7 +99,7 @@ function createPositionChallenge(number){
 
     return {
 
-        type:"position",
+        type: "position",
 
         question:
             "🎯 What is digit "
@@ -110,9 +122,12 @@ function createPositionChallenge(number){
 }
 
 
+
+
+
 // =====================================
 // Level 2
-// Chunk Memory
+// Chunk Challenge
 //
 // Remember groups
 // =====================================
@@ -132,13 +147,15 @@ function createChunkChallenge(number){
         type:"chunk",
 
         question:
-            "🧩 What chunk comes next?",
+            "🧩 Which chunk comes next?",
 
 
         display:
             chunks
-            .slice(0,index)
-            .join(" "),
+                .slice(0,index)
+                .join(" ")
+            +
+            " ____",
 
 
         answer:
@@ -150,11 +167,15 @@ function createChunkChallenge(number){
 
 
 
+
+
 // =====================================
 // Level 3
 // Chop Challenge
 //
-// Split number into pieces
+// Example:
+//
+// 04 123|45678
 // =====================================
 
 function createChopChallenge(number){
@@ -197,11 +218,15 @@ function createChopChallenge(number){
 
 
 
+
+
 // =====================================
 // Level 4
 // Swap Challenge
 //
-// Restore mixed chunks
+// Example:
+//
+// 5678 1234
 // =====================================
 
 function createSwapChallenge(number){
@@ -210,12 +235,15 @@ function createSwapChallenge(number){
         chunkPhone(number);
 
 
-    let swapped =
-        [
-            chunks[2],
-            chunks[1],
-            chunks[0]
-        ];
+    let swapped = [
+
+        chunks[2],
+
+        chunks[1],
+
+        chunks[0]
+
+    ];
 
 
     return {
@@ -239,12 +267,11 @@ function createSwapChallenge(number){
 
 
 
+
+
 // =====================================
 // Level 5
 // Master Recall
-//
-// Hard mode:
-// complete number from memory
 // =====================================
 
 function createMasterRecall(number){
@@ -270,9 +297,11 @@ function createMasterRecall(number){
 
 
 
+
+
 // =====================================
 // Challenge Generator
-// Unlocks by level
+// Unlock challenges by level
 // =====================================
 
 function generateChallenge(number){
@@ -287,6 +316,7 @@ function generateChallenge(number){
 
 
     // Level 1
+
     available.push(
         createFullRecall
     );
@@ -303,7 +333,9 @@ function generateChallenge(number){
 
 
 
+
     // Level 2
+
     if(level >= 2){
 
         available.push(
@@ -314,7 +346,9 @@ function generateChallenge(number){
 
 
 
+
     // Level 3
+
     if(level >= 3){
 
         available.push(
@@ -325,7 +359,9 @@ function generateChallenge(number){
 
 
 
+
     // Level 4
+
     if(level >= 4){
 
         available.push(
@@ -336,7 +372,9 @@ function generateChallenge(number){
 
 
 
+
     // Level 5
+
     if(level >= 5){
 
         available.push(
@@ -347,10 +385,12 @@ function generateChallenge(number){
 
 
 
-    let challenge =
+    let selected =
         randomItem(available);
 
 
-    return challenge(number);
+
+    return selected(number);
+
 
 }
