@@ -219,3 +219,28 @@ function calculateLevel(){
     return 1;
 
 }
+
+function getLevelName(){
+
+    let level =
+        calculateLevel();
+
+
+    const names = {
+
+        1:"👀 Study",
+
+        2:"🧩 Chunk",
+
+        3:"🪓 Chop",
+
+        4:"🔄 Swap",
+
+        5:"🧠 Master Recall"
+
+    };
+
+
+    return names[level];
+
+}
