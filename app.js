@@ -1,117 +1,155 @@
-let target = "512847936";
+let target = "";
 
 let input = "";
 
 let score = 0;
 
 
-// When a keypad button is pressed
-function pressKey(number) {
 
-    // Limit input length to Australian mobile number length
-    if (input.length < 11) {
-        input += number;
-    }
+// Start training with user's number
+function startGame(){
 
-    updateDisplay();
-}
+    let entered =
+    document.getElementById("phoneInput").value;
 
 
-// Remove last digit
-function clearNumber() {
-
-    input = input.slice(0, -1);
-
-    updateDisplay();
-
-}
+    // remove spaces
+    entered =
+    entered.replace(/\s/g,"");
 
 
-// Format phone number display
-function formatPhone(number) {
-
-    if (number.length === 0) {
-        return "_";
-    }
-
-
-    // Full Australian format
-    if (number.startsWith("04")) {
-
-        return (
-            number.slice(0,2)
-            + " "
-            + number.slice(2,5)
-            + " "
-            + number.slice(5,8)
-            + " "
-            + number.slice(8,10)
-        );
-
-    }
-
-
-    // Memory mode (without 04)
-    if (number.length > 2) {
-
-        return (
-            number.slice(0,3)
-            + " "
-            + number.slice(3,6)
-            + " "
-            + number.slice(6)
-        );
-
-    }
-
-
-    return number;
-
-}
-
-
-// Update screen
-function updateDisplay() {
-
-    document.getElementById("display").innerHTML =
-        formatPhone(input);
-
-}
-
-
-// Check answer
-function submit() {
-
-
-    // Remove the common Australian 04 prefix
-    let cleanedInput = input.replace(/^04/, "");
-
-
-    if (cleanedInput === target) {
-
-        score += 100;
-
-        alert("Correct! 🎉");
-
-    }
-
-    else {
-
-        score -= 20;
+    // basic Australian check
+    if(!entered.startsWith("04")
+        || entered.length !== 10){
 
         alert(
-            "Not quite. The number was 04 512 847 936"
+        "Please enter an Australian mobile number starting with 04"
         );
+
+        return;
 
     }
 
 
-    document.getElementById("score").innerHTML = score;
+    target = entered;
 
 
-    // Reset for next attempt
-    input = "";
+    document.getElementById("targetNumber")
+    .innerHTML =
+    formatPhone(target);
+
+
+
+    document.getElementById("setup")
+    .style.display="none";
+
+
+    document.getElementById("gameArea")
+    .style.display="block";
+
+
+}
+
+
+
+// keypad press
+function pressKey(number){
+
+    if(input.length < 10){
+
+        input += number;
+
+    }
 
     updateDisplay();
+
+}
+
+
+
+// backspace
+function clearNumber(){
+
+    input =
+    input.slice(0,-1);
+
+    updateDisplay();
+
+}
+
+
+
+// format Australian phone number
+function formatPhone(number){
+
+
+    if(number.length < 10){
+
+        return number;
+
+    }
+
+
+    return (
+        number.slice(0,2)
+        +" "
+        +number.slice(2,6)
+        +" "
+        +number.slice(6)
+    );
+
+
+}
+
+
+
+// show typed number
+function updateDisplay(){
+
+    document.getElementById("display")
+    .innerHTML =
+    formatPhone(input);
+
+}
+
+
+
+// check answer
+function submit(){
+
+
+    if(input === target){
+
+
+        score +=100;
+
+        alert(
+        "Correct! 🎉"
+        );
+
+
+    }
+
+    else{
+
+
+        score -=20;
+
+        alert(
+        "Try again!"
+        );
+
+
+    }
+
+
+    document.getElementById("score")
+    .innerHTML=score;
+
+
+    input="";
+
+    updateDisplay();
+
 
 }
