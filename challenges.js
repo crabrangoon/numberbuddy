@@ -94,8 +94,13 @@ function createPositionChallenge(number){
             + (position + 1)
             + "?",
 
+
         display:
-            formatPhone(number),
+            hideDigit(
+                number,
+                position
+            ),
+
 
         answer:
             body[position]
@@ -103,7 +108,6 @@ function createPositionChallenge(number){
     };
 
 }
-
 
 
 // =====================================
