@@ -139,8 +139,11 @@ function submit(){
 
     document.getElementById("score").innerHTML =
         result.score;
-
-
+    document.querySelector(".level").innerHTML =
+    "Level "
+    + calculateLevel()
+    + " • "
+    + getLevelName();
 
     if(result.correct){
 
