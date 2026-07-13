@@ -1,113 +1,86 @@
-// =============================
-// Phone Memory Trainer v0.2
-// =============================
-
-let target = "";
-let input = "";
-let score = 0;
-
-let gameState = "setup";
-
-let countdown = 5;
-let timer = null;
+//
+// app.js
+// Connects the UI with the game engine
+//
 
 
 // =============================
-// Start Game
+// Local UI state
 // =============================
 
-function startGame() {
+let playerInput = "";
 
-    let entered =
+
+
+// =============================
+// Start button
+// =============================
+
+function startGame(){
+
+    let phone =
         document.getElementById("phoneInput").value;
 
-    entered = entered.replace(/\s/g, "");
 
-    if (!/^04\d{8}$/.test(entered)) {
+    phone =
+        cleanPhone(phone);
 
-        alert("Please enter a valid Australian mobile number.");
+
+    if(!/^04\d{8}$/.test(phone)){
+
+        alert(
+            "Please enter a valid Australian mobile number."
+        );
 
         return;
 
     }
 
-    target = entered;
 
-    document.getElementById("setup").style.display = "none";
-    document.getElementById("game").style.display = "block";
+    document.getElementById("setup").style.display =
+        "none";
 
-    beginStudy();
+
+    document.getElementById("game").style.display =
+        "block";
+
+
+    startTraining(phone);
+
+
+    showChallenge();
+
 
 }
 
 
 
+
 // =============================
-// Study Phase
+// Display current challenge
 // =============================
 
-function beginStudy() {
+function showChallenge(){
 
-    gameState = "study";
+    let challenge =
+        getChallenge();
 
-    input = "";
-    updateDisplay();
-
-    countdown = 5;
 
     document.getElementById("instruction").innerHTML =
-        "👀 Memorise this number";
+        challenge.question;
+
 
     document.getElementById("targetNumber").innerHTML =
-        formatPhone(target);
-
-    document.getElementById("countdown").innerHTML =
-        countdown;
-
-    clearInterval(timer);
-
-    timer = setInterval(() => {
-
-        countdown--;
-
-        document.getElementById("countdown").innerHTML =
-            countdown;
-
-        if (countdown <= 0) {
-
-            clearInterval(timer);
-
-            beginRecall();
-
-        }
-
-    },1000);
-
-}
+        challenge.display;
 
 
-
-// =============================
-// Recall Phase
-// =============================
-
-function beginRecall() {
-
-    gameState = "recall";
-
-    document.getElementById("instruction").innerHTML =
-        "📞 Dial the number";
-
-    document.getElementById("targetNumber").innerHTML =
-        "████ ████";
-
-    document.getElementById("countdown").innerHTML = "";
-
-    input = "";
+    playerInput = "";
 
     updateDisplay();
 
 }
+
+
 
 
 
@@ -115,30 +88,29 @@ function beginRecall() {
 // Keypad
 // =============================
 
-function pressKey(number) {
+function pressKey(number){
 
-    if(gameState !== "recall")
-        return;
 
-    if(input.length < 10){
+    if(playerInput.length < 10){
 
-        input += number;
+        playerInput += number;
 
     }
+
 
     updateDisplay();
 
 }
+
+
 
 
 
 function clearNumber(){
 
-    if(gameState !== "recall")
-        return;
+    playerInput =
+        playerInput.slice(0,-1);
 
-    input =
-        input.slice(0,-1);
 
     updateDisplay();
 
@@ -146,93 +118,105 @@ function clearNumber(){
 
 
 
+
+
 // =============================
-// Submit
+// Submit answer
 // =============================
 
 function submit(){
 
-    if(gameState !== "recall")
-        return;
+
+    let result =
+        submitAnswer(playerInput);
 
 
-    if(input === target){
 
-        score +=100;
+    document.getElementById("instruction").innerHTML =
+        result.message;
 
-        document.getElementById("instruction").innerHTML =
-            "✅ Excellent!";
+
+
+    document.getElementById("score").innerHTML =
+        result.score;
+
+
+
+    if(result.correct){
+
+
+        document
+        .getElementById("targetNumber")
+        .innerHTML =
+            "⭐ Great work!";
+
 
     }
 
     else{
 
-        score -=20;
 
-        document.getElementById("instruction").innerHTML =
-            "❌ Try Again";
+        document
+        .getElementById("targetNumber")
+        .innerHTML =
+            "Answer: "
+            +
+            formatPhone(
+                result.correctAnswer
+            );
+
 
     }
 
 
-    document.getElementById("score").innerHTML =
-        score;
+
+    setTimeout(()=>{
 
 
-    document.getElementById("targetNumber").innerHTML =
-        formatPhone(target);
+        nextChallenge();
 
 
-    gameState = "result";
+        showChallenge();
 
 
-    setTimeout(() => {
+    },2500);
 
-        beginStudy();
-
-    },3000);
 
 }
 
 
 
+
+
 // =============================
-// Display
+// Display typed number
 // =============================
 
 function updateDisplay(){
 
-    if(input.length===0){
 
-        document.getElementById("display").innerHTML =
-            "Tap the keypad";
+    let display =
+        playerInput;
 
-        return;
+
+    if(display.length > 0){
+
+        display =
+            formatPhone(display);
 
     }
 
-    document.getElementById("display").innerHTML =
-        formatPhone(input);
+    else{
 
-}
+        display =
+            "Tap the keypad";
+
+    }
 
 
+    document.getElementById("display")
+    .innerHTML =
+        display;
 
-// =============================
-// Format Australian Number
-// =============================
-
-function formatPhone(number){
-
-    if(number.length < 10)
-        return number;
-
-    return (
-        number.slice(0,2)
-        + " "
-        + number.slice(2,6)
-        + " "
-        + number.slice(6)
-    );
 
 }
